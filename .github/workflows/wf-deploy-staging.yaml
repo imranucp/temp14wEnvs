@@ -1,10 +1,10 @@
-name: wf-develop-deploy
+name: wf-staging-deploy
 on:
   push:
     branches:
       - "release/**"
 jobs:
-  build-production-job:
+  build-staging-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -18,8 +18,8 @@ jobs:
           name: "staging-artifact"
           path: "./dist-staging"
 
-  deploy-production-job:
-    needs: "build-production-job"
+  deploy-staging-job:
+    needs: "build-staging-job"
     environment: "staging-env"
     permissions:
       pages: write
