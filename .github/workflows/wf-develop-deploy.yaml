@@ -1,0 +1,37 @@
+name: wf-develop-deploy
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  develop-build-job:
+    
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: build project
+        run: |
+          npx parcel build "./src/index.html" --dist-dir "./dist-dev" --publi-url "./"
+      - name: Upload Build Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: "devlop-build-artifact"
+          path: "./dist-dev"
+  develop-deploye-job:
+    needs: develop-build-job
+    environment: development-env
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Aritfacts On Development Environment
+        id: deployment
+        uses: actions/deploy-pages@v4        
+        with:
+          artifact_name: "devlop-build-artifact"
+          token: ${{github.token}}
+      - name: Deployment Success Message
+        run: echo "You Can Access the website at ${{steps.deployment.outputs.url}}"
+                
