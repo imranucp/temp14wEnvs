@@ -3,6 +3,8 @@ on:
   pull_request:
     branches:
       - develop
+      - "release/**"
+      - production
 jobs:
   pr-validation-job:
     runs-on: ubuntu-latest
