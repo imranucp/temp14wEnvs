@@ -2,7 +2,7 @@ name: develop-pr-validation
 on:
   pull_request:
     branches:
-      develop:
+      - develop
 jobs:
   pr-validation-job:
     runs-on: ubuntu-latest
